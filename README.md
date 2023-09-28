@@ -29,6 +29,28 @@ Installation:
 •	Vue Router
 •	Veutify
 
+
+<!-- Timeline -->
+Day 1:
+  •	Analysis and planning 
+  •	User registration + login 
+  • Home Page
+  • Product Pages
+
+Day 2:
+  •	Product Detail Page 
+  •	Cart Frontend
+  •	Search Functionality
+
+Day 3:
+  •	Wishlist
+  •	User Profile Management
+  •	Admin Panel 
+  
+Day 4:
+  •	Api integration 
+
+
 <!-- Work done so far  -->
   - login, signup pages 
   - home page

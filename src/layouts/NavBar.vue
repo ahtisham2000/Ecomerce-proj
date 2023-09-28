@@ -4,10 +4,11 @@
       <v-toolbar color="black" >
         <div>
         <v-btn variant="plain" to="/" >
-        <v-toolbar-title  class="mr-5" >Books.pk</v-toolbar-title>
+        <v-toolbar-title  class="mr-6" >Books.pk</v-toolbar-title>
     </v-btn>
 </div>
         <v-spacer></v-spacer>
+        <v-icon color="white" variant="plain" class="pr-5">mdi-account</v-icon>
         <router-link to="/cart">
     <v-icon color="white" variant="plain">mdi-cart</v-icon> 
       </router-link>
