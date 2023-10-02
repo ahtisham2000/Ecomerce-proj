@@ -6,16 +6,15 @@
 
 // Components
 import App from './App.vue'
-
+import index from "../src/vuex/index"
 // Composables
-import { createApp } from 'vue'
 
 // Plugins
 import { registerPlugins } from '@/plugins'
-import store from './vuex/store'
+import { createApp } from 'vue'
 
 const app = createApp(App)
 
 registerPlugins(app)
-app.use(store)
+app.use(index)
 app.mount('#app')

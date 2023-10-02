@@ -36,17 +36,17 @@
 
           <!-- Password input field -->
           <v-text-field
-            class="pt-2"
-            label="Password*"
-            variant="outlined"
-            :type="showPassword ? 'text' : 'password'"
-            v-model="password"
-            :rules="passwordRules"
-            required
-            ref="passwordField"
-            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append="showPassword = !showPassword"
-          />
+          class="pt-2"
+          label="Password*"
+          variant="outlined"
+          :type="showPassword ? 'text' : 'password'"
+          v-model="password"
+          :rules="passwordRules"
+          required
+          ref="passwordField"
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append="showPassword = !showPassword"
+        />
 
           <v-alert v-if="passwordError" type="error"
             >{{ passwordError }}
@@ -71,7 +71,7 @@
           }}</v-alert>
 
           <div class="text-center pt-5">
-            <v-btn class="black-button" size="large">Register</v-btn>
+            <v-btn class="black-button" size="large" type="submit" >Register</v-btn>
           </div>
         </v-form>
       </v-container>
@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import registerUserApi from "../services/apiintegrations/UserAPI/registerUserApi";
+import RegisterUserApi from "../services/apiintegrations/UserAPI/registerUserApi";
 export default {
   data() {
     return {
@@ -125,29 +125,28 @@ export default {
   },
   methods: {
     async handleSignup() {
-      console.log(`func start`)
       if (
         this.$refs.nameField.validate() &&
         this.$refs.emailField.validate() &&
         this.$refs.passwordField.validate() &&
         this.$refs.confirmPasswordField.validate()
       ) {
-        console.log("Form is valid. Submitting...");
         // Add your registration logic here
         try {
-          const response = await registerUserApi.registerUser({
+          const response = await RegisterUserApi.registerUser({
             name: this.name,
             email: this.email,
             password: this.password,
             confirm_password: this.confirm_password,
           });
-          console.log(response);
+          if(response.message == "Registeration Successful"){
+            this.$router.push("/login");
+          }
         } catch (e) {
           console.log(e);
         }
       }
     },
-    async signup() {},
   },
 };
 </script>

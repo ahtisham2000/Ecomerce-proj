@@ -2,17 +2,17 @@
   <v-row>
     <v-col cols="12">
       <v-container class="login-container mt-12">
-        <v-form @submit.prevent="validateForm" class="login-form">
+        <v-form @submit.prevent="handleLogin" ref="form" class="login-form">
           <h1>Log In</h1>
           <p>Enter your credentials to proceed</p>
           <!-- User name field with validation -->
           <v-text-field
             class="pt-2 mt-2"
-            label="User name*"
+            label="Email*"
             variant="outlined"
-            type="text"
-            v-model="name"
-            :rules="nameRules"
+            type="email"
+            v-model="email"
+            :rules="emailRules"
             required
           />
           <v-text-field
@@ -26,12 +26,7 @@
           />
           <!-- Display error messages -->
           <div class="text-center">
-            <v-alert v-if="formIsValid === false" type="error">
-              Please fix the form errors.
-            </v-alert>
-            <v-btn class="black-button">
-              Log In
-            </v-btn>
+            <v-btn class="black-button" type="submit"> Log In </v-btn>
           </div>
         </v-form>
       </v-container>
@@ -40,35 +35,34 @@
 </template>
 
 <script>
+import LoginUserApi from "@/services/apiintegrations/UserAPI/loginUserApi";
+
 export default {
   data() {
     return {
-      name: '',
-      password: '',
+      email: "",
+      password: "",
       formIsValid: true,
-      nameRules: [
-        v => !!v || 'User name is required',
-      ],
-      passwordRules: [
-        v => !!v || 'Password is required',
-      ],
+      emailRules: [(v) => !!v || "Email is required"],
+      passwordRules: [(v) => !!v || "Password is required"],
     };
   },
   methods: {
-    validateForm() {
-      this.$refs.form.validate();
-      if (this.$refs.form.hasError) {
-        this.formIsValid = false;
-      } else {
-        // Form is valid, perform login here
-        // this.handleSignup();
-        this.formIsValid = true;
+    async handleLogin() {
+      try {
+        const response = await LoginUserApi.loginUser({
+          email: this.email,
+          password: this.password,
+        });
+        console.log(response);
+        if (response.message === "Login Successful") {
+          localStorage.setItem("token", response.token);
+          this.$router.push("/");
+        }
+      } catch (error) {
+        throw error;
       }
     },
-    // Add your handleSignup method here
-    // handleSignup() {
-    //   // Perform login logic
-    // }
   },
 };
 </script>

@@ -11,15 +11,20 @@
     </thead>
     <tbody>
       <tr v-for="item in cart" :key="item.name">
-        <td>{{ item.name }}</td>
-        <td>{{ item.Qty }}</td>
-        <td>{{ item.Price }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price }}</td>
       </tr>
     </tbody>
   </v-table>
     </v-card>
+
     <div class="pt-5 text-right" >
-    <v-btn variant="outlined" class="checkout-btn" size="large">Checkout</v-btn>
+      <h2>Total Amount : $1233</h2>
+      <br/>
+    <v-btn   color="#388E3C" class="checkout-btn primary" size="large" >Continue Shopping
+    </v-btn>
+    <v-btn  color="#01579B" class="checkout-btn ml-2" size="large">Checkout</v-btn>
 </div>
 </v-container>
 
@@ -32,25 +37,18 @@
     data() {
       return {
         cart: [
-          {
-            name: 'iphone',
-            Qty: 1,
-            Price: 1000,
-          },
-          {
-            name: 'samsung',
-            Qty: 1,
-            Price: 5000,
-          },
-          {
-            name: 'book',
-            Qty: 1,
-            Price: 498,
-          },
+          // product from product detail page
         ],
       }
     },
-  }
+    computed:{
+      cart() {
+        console.log(this.$store.state.cart[0])
+        this.cart.push(this.$store.state.cart[0])
+        return this.$store.state.cart
+      }
+    },
+  };
 </script>
 
 

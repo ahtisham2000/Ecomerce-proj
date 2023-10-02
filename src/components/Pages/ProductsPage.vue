@@ -30,7 +30,6 @@
               <v-img :src="product.cover_image" height="200"></v-img>
               <v-card-title>{{ product.title }}</v-card-title>
               <v-card-subtitle>{{ product.author }}</v-card-subtitle>
-              <v-card-text>{{ product.description }}</v-card-text>
               <v-card-actions>
                 <v-btn color="primary">Price: ${{ product.price }}</v-btn>
                 <v-btn color="success">Rating: {{ product.rating }}</v-btn>
@@ -57,7 +56,7 @@
 <script>
 import GetAllBooks from "../../services/apiintegrations/productAPI/getAllBooks"
 import SideBar from "../../layouts/SideBar.vue";
-import axios from 'axios';
+
 
 export default {
   name: "ProductsPage",
