@@ -5,7 +5,7 @@
         <!-- <div v-if="product.images && product.images.length > 0" class="images"> -->
 
         <img
-          class="ml-15"
+          class="ml-15 img-card"
           :src="product.cover_image"
           alt="Product Image"
           height="400"
@@ -103,4 +103,5 @@ export default {
   bottom: 20% !important;
  
 }
+
 </style>

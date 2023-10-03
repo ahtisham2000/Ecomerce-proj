@@ -106,6 +106,10 @@ export default {
 </script>
 
 <style scoped>
+
+.prod-card:hover {
+    transform: scale(1.01); /* Increase the size by 5% on hover */
+}
 .First-part {
   border: 1px solid lightgray;
 }
