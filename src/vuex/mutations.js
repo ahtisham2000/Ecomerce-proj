@@ -1,7 +1,7 @@
 export const ADD_TO_CART = (state, {id,title,quantity,price}) => {
 
     let productInCart = state.cart.find(item => {
-        return item.title === title;
+        return item.id === id;
         
     });
 
@@ -18,9 +18,9 @@ export const ADD_TO_CART = (state, {id,title,quantity,price}) => {
     })
 }
 
-export const REMOVE_FROM_CART = (state, {title}) => {
+export const REMOVE_FROM_CART = (state, {id}) => {
     state.cart = state.cart.filter(item => {
-        return item.title !== title;
+        return item.id !== id;
     })
 }
 

@@ -1,7 +1,7 @@
-export const AddBooktoCart =({commit},{title,quantity,price}) => {
-    commit('ADD_TO_CART',{title,quantity,price});
+export const AddBooktoCart =({commit},{id,title,quantity,price}) => {
+    commit('ADD_TO_CART',{id,title,quantity,price});
 }
 
-export const removeProductFromCart = ({commit},{title}) => {
-    commit('REMOVE_FROM_CART', {title});
+export const removeProductFromCart = ({commit},{id}) => {
+    commit('REMOVE_FROM_CART', {id});
 } 

@@ -35,25 +35,35 @@
         >
       </v-col>
     </v-row>
-    
-      <!-- v-alert for showing the cart message -->
-      <v-alert
-        v-model="showCartMessage"
-        type="success"
-        dismissible
-        class="cart-alert"
-      >
-        Added to Cart.
-      </v-alert>
-    
+
+    <!-- v-alert for showing the cart message -->
+    <v-alert
+      v-model="showCartMessage"
+      type="success"
+      dismissible
+      class="cart-alert"
+    >
+      Added to Cart.
+    </v-alert>
+
+    <!-- FeedBackView -->
+    <FeedBackView />
+
+    <!--Related Books  -->
+    <RelatedBooks/>
   </v-container>
 </template>
 
 <script>
 import GetSingleBook from "../../services/apiintegrations/productAPI/getSingleBook";
+import FeedBackView from "../../views/FeedBackView.vue";
+import RelatedBooks from "../../views/RelatedBooks.vue";
 
 export default {
   name: "ProductDetailsPage",
+  components: {
+    FeedBackView,RelatedBooks
+  },
   data() {
     return {
       product: {},
@@ -64,11 +74,11 @@ export default {
     const BookId = this.$route.params.id;
     const response = await GetSingleBook.getSingeBook(BookId);
     this.product = response.book;
-    console.log(this.product.book);
   },
   methods: {
     AddtoCart() {
       this.$store.dispatch("AddBooktoCart", {
+        id: this.product.id,
         title: this.product.title,
         quantity: 1,
         price: this.product.price,
@@ -101,7 +111,5 @@ export default {
   position: relative;
   left: 75%;
   bottom: 20% !important;
- 
 }
-
 </style>

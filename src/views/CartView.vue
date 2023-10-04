@@ -4,7 +4,7 @@
       <v-table theme="dark">
         <thead>
           <tr>
-            <!-- i want this row dark -->
+      
             <th class="text-left">Name</th>
             <th class="text-left">Qty</th>
             <th class="text-left">Price</th>
@@ -12,13 +12,12 @@
           </tr>
         </thead>
         <tbody>
-          <!-- i want these rows light -->
           <tr v-for="item in cart" :key="item.name" class="light-bg">
             <td>{{ item.title }}</td>
             <td>{{ item.quantity }}</td>
             <td>{{ item.price }}</td>
             <td class="text-center">
-              <v-icon @click="removeProductFromCart(item.title)" color="red"
+              <v-icon @click="removeProductFromCart(item.id)" color="red"
                 >mdi-close</v-icon
               >
             </td>
@@ -36,7 +35,11 @@
       <v-btn color="#388E3C" class="checkout-btn primary" size="large"
         >Continue Shopping
       </v-btn>
-      <v-btn color="#01579B" class="checkout-btn ml-2" size="large"
+      <v-btn
+        color="#01579B"
+        class="checkout-btn ml-2"
+        size="large"
+        @click="checkout"
         >Checkout</v-btn
       >
     </div>
@@ -44,49 +47,67 @@
 </template>
 
 <script>
+import CheckoutApi from "../../src/services/apiintegrations/productAPI/CheckoutApi";
 export default {
   name: "CartView",
-  data() {
-    return {
-      cart: [
-        // product from product detail page
-      ],
-    };
-  },
+  data() {},
   computed: {
     cart() {
-
-      this.cart.push(this.$store.state.cart[0]);     
-
-       let title = this.$store.state.cart.title;
-       let quantity = this.$store.state.cart.quantity;
-       let price = this.$store.state.cart.price;
-      
-      let cartObjects = {
-        title: title,
-        quantity: quantity,
-        price: price,
-      }
-      // Save the title to local storage
-      let cartArrayofObjects =[] 
-      cartArrayofObjects.push(cartObjects)
-      console.log(cartArrayofObjects)
-      localStorage.setItem('addToCarts', JSON.stringify(cartArrayofObjects))
-      return this.$store.state.cart;
-      
+      const currentCart = this.$store.state.cart;
+      console.log(currentCart[2]);
+      localStorage.setItem("addToCarts", JSON.stringify(currentCart));
+      return currentCart;
     },
-      cartTotalPrice() {
+
+    cartTotalPrice() {
       return this.$store.getters.cartTotalPrice;
     },
   },
 
   methods: {
-    removeProductFromCart(title) {
-      this.$store.dispatch("removeProductFromCart", {title});
+    removeProductFromCart(id) {
+      this.$store.dispatch("removeProductFromCart", { id });
     },
-    },
-}
 
+    async checkout() {
+      try {
+        let checkoutData = this.cart.map((item) => ({
+          book_id: item.id,
+          quantity: item.quantity,
+        }));
+        let book_id = [];
+        let quantity = [];
+        checkoutData.map((item) => {
+          book_id.push(item.book_id);
+          quantity.push(item.quantity);
+        });
+        console.log(book_id);
+        console.log(quantity);
+        // update checkoutData from array of objects to array of arrays
+        
+        console.log(checkoutData);
+        const response = await CheckoutApi.checkout({
+          "book_id": book_id,
+          "quantity": quantity
+        });
+        console.log(response);
+        this.$store.dispatch("clearCart");
+        this.$router.push({ name: "Checkout" });
+
+        let ordersuccess = await CheckoutApi.checkout(checkoutData);
+        console.log(ordersuccess);
+
+        // Handle success or any further actions
+        // For example, you can clear the cart after a successful checkout
+       
+      } catch (error) {
+        // Handle any errors, e.g., show an error message
+        console.error("Checkout error:", error);
+        alert("Checkout failed. Please try again later.");
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
