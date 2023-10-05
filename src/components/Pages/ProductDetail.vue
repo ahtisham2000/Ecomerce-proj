@@ -46,12 +46,15 @@
       Added to Cart.
     </v-alert>
 
-    <!-- FeedBackView -->
-    <FeedBackView />
-
-    <!--Related Books  -->
-    <RelatedBooks/>
+    
+    
   </v-container>
+
+  <!-- FeedBackView -->
+  
+  <FeedBackView />
+<!--Related Books  -->
+<RelatedBooks/>
 </template>
 
 <script>
